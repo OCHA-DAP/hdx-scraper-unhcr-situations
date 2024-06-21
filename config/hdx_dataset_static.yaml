@@ -1,0 +1,10 @@
+package_creator: "briar-mills"
+dataset_source: "UNHCR"
+data_update_frequency: "30"
+license_id: "cc-by-igo"
+caveats: "Data is operational and may not match yearly official figures"
+subnational: "0"
+methodology: "Other"
+methodology_other: "Collected from various sources"
+private: False
+notes: "Contains data from the UNHCR situations [operational data portal](https://data.unhcr.org/en/situations) covering refugees, asylum seekers, and others of concern."

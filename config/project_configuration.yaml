@@ -1,0 +1,19 @@
+# Collector specific configuration
+base_url: "https://data.unhcr.org/population/get/sublocation"
+
+dataset_name: "unhcr-situations"
+dataset_title: "UNHCR Situations: Refugees, Asylym Seekers, and Others of Concern"
+tags:
+  - "asylum seekers"
+  - "refugees"
+
+sv_ids:
+  - "45"
+  - "47"
+  - "48"
+  - "51"
+
+population_collections:
+  - "4"
+  - "29"
+  - "81"
