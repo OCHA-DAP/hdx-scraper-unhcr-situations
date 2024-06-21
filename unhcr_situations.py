@@ -25,8 +25,7 @@ class UNHCRSituations:
         self.new_data = []
         self.errors = errors
 
-    def get_data_from_hdx(self):
-        dataset = Dataset.read_from_hdx(self.configuration["dataset_name"])
+    def get_data_from_hdx(self, dataset):
         if not dataset:
             return
         resources = dataset.get_resources()
@@ -56,11 +55,11 @@ class UNHCRSituations:
                 if not iso3:
                     logger.warning(f"Could not find iso3 for {country}")
                 row = {
-                    "country": country,
-                    "iso3": iso3[0],
-                    "source": data_row["source"],
-                    "date": data_row["date"],
-                    "individuals": data_row["individuals"],
+                    "Country": country,
+                    "ISO3": iso3[0],
+                    "Source": data_row["source"],
+                    "Date": data_row["date"],
+                    "Individuals": data_row["individuals"],
                 }
 
                 if row in self.old_data:
@@ -72,16 +71,18 @@ class UNHCRSituations:
         if len(self.new_data) == 0:
             return None
         rows = self.old_data + self.new_data
+        rows = sorted(rows, key=lambda x: (x["ISO3"], x["Date"]))
         name = self.configuration["dataset_name"]
         title = self.configuration["dataset_title"]
         dataset = Dataset({"name": slugify(name), "title": title})
         dataset.set_maintainer("ac47b0c8-548b-4c37-a685-7377e75aad55")
         dataset.set_organization("abf4ca86-8e69-40b1-92f7-71509992be88")
-        locations = [row["iso3"] for row in rows if row["iso3"]]
+        locations = [row["ISO3"] for row in rows if row["ISO3"]]
         locations = list(set(locations))
+        locations.sort()
         dataset.add_country_locations(locations)
         dataset.add_tags(self.configuration["tags"])
-        dates = [parse_date(row["date"]) for row in rows]
+        dates = [parse_date(row["Date"]) for row in rows]
         dataset.set_time_period(min(dates), max(dates))
 
         filename = f"{name.lower()}.csv"

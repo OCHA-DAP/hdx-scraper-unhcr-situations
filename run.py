@@ -7,6 +7,7 @@ import logging
 from os.path import expanduser, join
 
 from hdx.api.configuration import Configuration
+from hdx.data.dataset import Dataset
 from hdx.data.hdxobject import HDXError
 from hdx.facades.infer_arguments import facade
 from hdx.utilities.downloader import Download
@@ -32,7 +33,8 @@ def main(save: bool = False, use_saved: bool = False) -> None:
                 )
                 configuration = Configuration.read()
                 unhcr_situations = UNHCRSituations(configuration, retriever, temp_folder, errors)
-                unhcr_situations.get_data_from_hdx()
+                dataset = Dataset.read_from_hdx(configuration["dataset_name"])
+                unhcr_situations.get_data_from_hdx(dataset)
                 unhcr_situations.get_data_from_unhcr()
                 dataset = unhcr_situations.generate_dataset()
                 if dataset:
