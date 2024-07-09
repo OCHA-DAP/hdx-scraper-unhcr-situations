@@ -1,58 +1,26 @@
-Country,ISO3,Source,Date,Individuals
-Afghanistan (Islamic Republic of),AFG,UNHCR,2024-05-15,34827
-Angola,AGO,"UNHCR, Government",2024-05-31,55764
-Burundi,BDI,"UNHCR, Government",2024-03-31,88601
-Benin,BEN,"UNHCR, Government",2024-05-31,19713
-Burkina Faso,BFA,"UNHCR, Government",2024-04-30,39601
-Bangladesh,BGD,"UNHCR, Inter Sector Coordination Group, Government, Government of Bangladesh",2024-05-31,5034932
-Botswana,BWA,"UNHCR, Government",2024-04-30,1011
-Central African Republic,CAF,"Government, UNHCR",2024-05-31,178491
-Cote d'Ivoire,CIV,"UNHCR, Government",2024-05-31,53030
-Cameroon,CMR,"UNHCR, Government",2024-04-30,487592
-Democratic Republic of the Congo,COD,"UNHCR, Government",2024-05-31,526248
-Republic of the Congo,COG,"UNHCR, Government",2024-04-30,80660
-Comoros,COM,"UNHCR, Government",2024-04-30,12
-Djibouti,DJI,UNHCR,2024-05-31,31514
-Eritrea,ERI,UNHCR,2024-03-31,118
-Ethiopia,ETH,"UNHCR, Government",2024-06-16,1096441
-Gabon,GAB,UNHCR,2024-06-18,286
-Ghana,GHA,"UNHCR, Government",2024-05-31,23142
-Guinea,GIN,"UNHCR, Government",2024-05-31,2244
-Gambia,GMB,"Government, UNHCR",2024-05-31,4303
-Guinea-Bissau,GNB,"UNHCR, Government",2024-05-31,69
-Indonesia,IDN,"UNHCR, Government",2024-05-31,6600
-India,IND,"UNHCR, Government",2024-02-09,117321
-Iran (Islamic Republic of),IRN,"Government of the Islamic Republic of Iran (GIRI), UNHCR, Government, Various",2024-03-31,5602874
-Kazakhstan,KAZ,Government,2023-12-31,753
-Kenya,KEN,"UNHCR, Government",2024-05-31,774370
-Kyrgyzstan,KGZ,Government,2023-12-31,1457
-Liberia,LBR,"UNHCR, Government",2024-05-31,1830
-Lesotho,LSO,"UNHCR, Government",2024-04-30,731
-Madagascar,MDG,"UNHCR, Government",2024-04-30,1186
-Mali,MLI,"UNHCR, Government",2024-05-31,94217
-Mozambique,MOZ,"UNHCR, Government",2024-04-30,25089
-Mauritius,MUS,"UNHCR, Government",2024-04-30,37
-Malawi,MWI,"UNHCR, Government",2024-04-30,53859
-Malaysia,MYS,"UNHCR, Government",2024-05-31,18400
-Namibia,NAM,"UNHCR, Government",2024-04-30,7363
-Niger,NER,"UNHCR, Government",2024-05-31,457139
-Nigeria,NGA,"UNHCR, Government",2024-05-31,88567
-Pakistan (Islamic Republic of),PAK,"UNHCR, Government, Various",2024-05-31,5487920
-Rwanda,RWA,"UNHCR, Government, MINEMA",2024-05-31,135809
-Sudan,SDN,"UNHCR, COR",2024-05-22,1104246
-Senegal,SEN,"UNHCR, Government",2024-05-31,12795
-Sierra Leone,SLE,"UNHCR, Government",2024-05-31,210
-Somalia,SOM,UNHCR,2024-05-31,39286
-South Sudan,SSD,"UNHCR, Government",2024-06-16,788587
-Eswatini,SWZ,"UNHCR, Government",2024-04-30,3185
-Chad,TCD,"UNHCR, Government",2024-06-07,1944735
-Togo,TGO,"Government, UNHCR",2024-05-31,48015
-Thailand,THA,"TBC, UNHCR, Government",2024-06-21,147898
-Tajikistan,TJK,"UNHCR, Government, Various",2023-12-31,16983
-Turkmenistan,TKM,"UNHCR, Various",2023-12-31,3613
-Tanzania (United Republic of),TZA,"UNHCR, Government",2024-05-31,197573
-Uganda,UGA,"Office of the Prime Minister, UNHCR, Government",2024-05-31,1688803
-Uzbekistan,UZB,"UNHCR, Various",2023-12-31,9405
-South Africa,ZAF,"UNHCR, Government",2024-04-30,154122
-Zambia,ZMB,"UNHCR, Government",2024-05-31,101838
-Zimbabwe,ZWE,"UNHCR, Government",2024-04-30,23540
+Country,ISO3,Country of Origin,ISO3 of Origin,Population type,Source,Date,Individuals
+Benin,BEN,Togo,TGO,Refugees,"UNHCR, Government",2024-05-31,4716
+Cote d'Ivoire,CIV,Liberia,LBR,Refugees,"UNHCR, Government",2023-05-31,1152
+Guinea,GIN,Mali,MLI,Refugees,"UNHCR, Government",2024-05-31,9
+Sudan,SDN,Others,,Refugees,"UNHCR, COR",2024-03-31,35
+Sudan,SDN,South Sudan,SSD,Refugees,"UNHCR, COR",2024-03-31,663396
+Sudan,SDN,Sudan,SDN,Refugees,"UNHCR, COR",2024-05-22,451805
+South Sudan,SSD,Burundi,BDI,Refugees,"UNHCR, Government",2024-05-31,555
+South Sudan,SSD,Central African Rep.,CAF,Refugees,"UNHCR, Government",2024-02-29,2486
+South Sudan,SSD,Dem. Rep. of the Congo,COD,Refugees,"UNHCR, Government",2024-05-31,13533
+South Sudan,SSD,Eritrea,ERI,Asylum-Seekers,"UNHCR, Government",2024-05-31,2580
+South Sudan,SSD,Ethiopia,ETH,Refugees,"UNHCR, Government",2024-05-31,5328
+South Sudan,SSD,Others,,Asylum-Seekers,"UNHCR, Government",2024-05-31,35
+South Sudan,SSD,Somalia,SOM,Asylum-Seekers,"UNHCR, Government",2024-05-31,32
+South Sudan,SSD,South Sudan,SSD,Asylum-Seekers,"UNHCR, Government",2024-02-14,0
+South Sudan,SSD,Sudan,SDN,Refugees,"UNHCR, Government",2024-06-30,762283
+South Sudan,SSD,Various,,Asylum-Seekers,"UNHCR, Government",2024-05-31,5805
+Uganda,UGA,Burundi,BDI,Refugees,"Office of the Prime Minister, UNHCR, Government",2024-06-30,43533
+Uganda,UGA,Dem. Rep. of the Congo,COD,Asylum-Seekers,"Office of the Prime Minister, UNHCR, Government",2024-06-30,526062
+Uganda,UGA,Eritrea,ERI,Asylum-Seekers,"Office of the Prime Minister, UNHCR, Government",2024-06-30,51882
+Uganda,UGA,Ethiopia,ETH,Asylum-Seekers,"Office of the Prime Minister, UNHCR, Government",2024-06-30,13035
+Uganda,UGA,Others,,Refugees,"Office of the Prime Minister, UNHCR, Government",2024-06-30,1499
+Uganda,UGA,Rwanda,RWA,Refugees,"Office of the Prime Minister, UNHCR, Government",2024-06-30,24592
+Uganda,UGA,Somalia,SOM,Refugees,"Office of the Prime Minister, UNHCR, Government",2024-06-30,51350
+Uganda,UGA,South Sudan,SSD,Refugees,"Office of the Prime Minister, UNHCR, Government",2024-06-30,948191
+Uganda,UGA,Sudan,SDN,Asylum-Seekers,"Office of the Prime Minister, UNHCR, Government",2024-06-30,81813

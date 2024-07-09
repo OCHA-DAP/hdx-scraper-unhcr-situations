@@ -34,29 +34,37 @@ class UNHCRSituations:
         for row in iterator:
             self.old_data.append(row)
 
-    def get_data_from_unhcr(self):
+    def get_data_from_unhcr(self, geo_ids=None):
         base_url = self.configuration["base_url"]
         population_collections = self.configuration["population_collections"]
-        sv_ids = self.configuration["sv_ids"]
+        if not geo_ids:
+            geo_ids = self.configuration["geo_ids"]
 
-        for sv_id in sv_ids:
-            url = f"{base_url}?sv_id={sv_id}&population_collection={','.join(population_collections)}"
+        for geo_id in geo_ids:
+            url = f"{base_url}?geo_id={geo_id}&population_collection={','.join(population_collections)}"
             try:
                 json = self.retriever.download_json(url)
             except DownloadError:
-                self.errors.add(f"Could not download data for {sv_id}")
+                self.errors.add(f"Could not download data for {geo_id}")
                 continue
 
             for data_row in json["data"]:
                 country = data_row["geomaster_name"]
-                if country == "Other":
-                    continue
                 iso3 = Country.get_iso3_country_code_fuzzy(country)
                 if not iso3:
                     logger.warning(f"Could not find iso3 for {country}")
+                country_origin = data_row["pop_origin_name"]
+                if not country_origin:
+                    continue
+                origin_iso3 = Country.get_iso3_country_code_fuzzy(country_origin)
+                if not origin_iso3:
+                    logger.warning(f"Could not find iso3 for {country_origin}")
                 row = {
                     "Country": country,
                     "ISO3": iso3[0],
+                    "Country of Origin": country_origin,
+                    "ISO3 of Origin": origin_iso3[0],
+                    "Population type": data_row["pop_type_name"],
                     "Source": data_row["source"],
                     "Date": data_row["date"],
                     "Individuals": data_row["individuals"],
@@ -71,7 +79,7 @@ class UNHCRSituations:
         if len(self.new_data) == 0:
             return None
         rows = self.old_data + self.new_data
-        rows = sorted(rows, key=lambda x: (x["ISO3"], x["Date"]))
+        rows = sorted(rows, key=lambda x: (x["ISO3"], x["Country of Origin"], x["Date"]))
         name = self.configuration["dataset_name"]
         title = self.configuration["dataset_title"]
         dataset = Dataset({"name": slugify(name), "title": title})
@@ -88,7 +96,7 @@ class UNHCRSituations:
         filename = f"{name.lower()}.csv"
         resourcedata = {
             "name": filename,
-            "description": "Country level refugees, asylum seekers, and others of concern over time",
+            "description": "Country level refugees and asylum seekers over time",
         }
 
         dataset.generate_resource_from_rows(
@@ -96,7 +104,7 @@ class UNHCRSituations:
             filename,
             rows,
             resourcedata,
-            list(rows[0].keys()),
+            list(rows[-1].keys()),
         )
 
         return dataset

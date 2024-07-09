@@ -1,5 +1,5 @@
-Country,ISO3,Source,Date,Individuals
-Democratic Republic of the Congo,COD,"UNHCR, Government",2024-05-31,526248
-Botswana,BWA,"UNHCR, Government",2024-04-30,1011
-Guinea-Bissau,GNB,"UNHCR, Government",2024-05-31,69
-Indonesia,IDN,"UNHCR, Government",2024-05-31,6600
+Country,ISO3,Country of Origin,ISO3 of Origin,Population type,Source,Date,Individuals
+Benin,BEN,Togo,TGO,Refugees,"UNHCR, Government",2024-05-31,4716
+Cote d'Ivoire,CIV,Liberia,LBR,Refugees,"UNHCR, Government",2023-05-31,1152
+Guinea,GIN,Mali,MLI,Refugees,"UNHCR, Government",2024-05-31,9
+Uganda,UGA,Ethiopia,ETH,Asylum-Seekers,"Office of the Prime Minister, UNHCR, Government",2024-06-30,13035

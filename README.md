@@ -2,7 +2,7 @@
 [![Build Status](https://github.com/OCHA-DAP/hdx-scraper-unhcr-situations/actions/workflows/run-python-tests.yaml/badge.svg)](https://github.com/OCHA-DAP/hdx-scraper-unhcr-situations/actions/workflows/run-python-tests.yaml)
 [![Coverage Status](https://coveralls.io/repos/github/OCHA-DAP/hdx-scraper-unhcr-situations/badge.svg?branch=main&ts=1)](https://coveralls.io/github/OCHA-DAP/hdx-scraper-unhcr-situations?branch=main)
 
-This script extracts data and metadata from [UNHCR Situations](https://data.unhcr.org/en/regions) and creates one dataset in HDX. It makes several reads from the UNHCR API and two read/writes (API calls) to HDX in a one hour period. It creates one temporary file of a few Kb which it uploads into HDX. It is run every week.
+This script extracts data and metadata from [UNHCR Situations](https://data.unhcr.org/en/regions) and creates one dataset in HDX. It makes around 35 reads from the UNHCR API and two read/writes (API calls) to HDX in a one hour period. It creates around 35 temporary files of a few Kb, one of which it uploads into HDX. It is run every week.
 
 
 ### Usage
