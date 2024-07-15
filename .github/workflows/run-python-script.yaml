@@ -4,8 +4,8 @@ name: Run script
 
 on:
   workflow_dispatch: # add run button in GitHub UI
-#  schedule: #  Run script according to a cron schedule
-#    - cron: "15 9 * * *"
+  schedule: #  Run script according to a cron schedule
+    - cron: "15 9 * * *"
 
 jobs:
   build:
