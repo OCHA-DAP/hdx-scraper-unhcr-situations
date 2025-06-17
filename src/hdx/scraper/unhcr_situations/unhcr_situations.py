@@ -5,6 +5,7 @@ UNHCR Situations:
 Reads UNHCR JSONs and creates datasets.
 
 """
+
 import logging
 
 from hdx.data.dataset import Dataset
@@ -25,7 +26,8 @@ class UNHCRSituations:
         self.new_data = []
         self.errors = errors
 
-    def get_data_from_hdx(self, dataset):
+    def get_data_from_hdx(self, dataset_name):
+        dataset = Dataset.read_from_hdx(dataset_name)
         if not dataset:
             return
         resources = dataset.get_resources()
@@ -79,7 +81,9 @@ class UNHCRSituations:
         if len(self.new_data) == 0:
             return None
         rows = self.old_data + self.new_data
-        rows = sorted(rows, key=lambda x: (x["ISO3"], x["Country of Origin"], x["Date"]))
+        rows = sorted(
+            rows, key=lambda x: (x["ISO3"], x["Country of Origin"], x["Date"])
+        )
         name = self.configuration["dataset_name"]
         title = self.configuration["dataset_title"]
         dataset = Dataset({"name": slugify(name), "title": title})
