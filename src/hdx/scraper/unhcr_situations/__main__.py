@@ -17,7 +17,7 @@ from hdx.utilities.errors_onexit import ErrorsOnExit
 from hdx.utilities.path import temp_dir
 from hdx.utilities.retriever import Retrieve
 
-from unhcr_situations import UNHCRSituations
+from hdx.scraper.unhcr_situations.unhcr_situations import UNHCRSituations
 
 logger = logging.getLogger(__name__)
 
