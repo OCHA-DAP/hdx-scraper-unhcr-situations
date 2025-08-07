@@ -13,7 +13,7 @@ from hdx.data.hdxobject import HDXError
 from hdx.data.user import User
 from hdx.facades.infer_arguments import facade
 from hdx.utilities.downloader import Download
-from hdx.utilities.errors_onexit import ErrorsOnExit
+from hdx.utilities.errors_onexit import ErrorHandler
 from hdx.utilities.path import temp_dir
 from hdx.utilities.retriever import Retrieve
 
@@ -38,7 +38,7 @@ def main(save: bool = False, use_saved: bool = False) -> None:
     """
     configuration = Configuration.read()
     User.check_current_user_write_access("unhcr")
-    with ErrorsOnExit() as errors:
+    with ErrorHandler() as errors:
         with temp_dir(_USER_AGENT_LOOKUP) as temp_folder:
             with Download() as downloader:
                 retriever = Retrieve(

@@ -8,7 +8,7 @@ from os.path import join
 
 from hdx.utilities.compare import assert_files_same
 from hdx.utilities.downloader import Download
-from hdx.utilities.errors_onexit import ErrorsOnExit
+from hdx.utilities.errors_onexit import ErrorHandler
 from hdx.utilities.path import temp_dir
 from hdx.utilities.retriever import Retrieve
 
@@ -79,7 +79,7 @@ class TestUNHCRSituations:
                     use_saved=True,
                 )
                 unhcr_situations = UNHCRSituations(
-                    configuration, retriever, tempdir, ErrorsOnExit()
+                    configuration, retriever, tempdir, ErrorHandler()
                 )
                 unhcr_situations.get_data_from_hdx(configuration["dataset_name"])
                 assert len(unhcr_situations.old_data) == 4
