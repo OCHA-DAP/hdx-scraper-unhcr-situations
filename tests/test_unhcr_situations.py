@@ -56,8 +56,6 @@ class TestUNHCRSituations:
         "name": "unhcr-situations.csv",
         "description": "Country level refugees and asylum seekers over time",
         "format": "csv",
-        "resource_type": "file.upload",
-        "url_type": "upload",
     }
 
     def test_main(
