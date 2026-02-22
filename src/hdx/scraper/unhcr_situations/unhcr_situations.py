@@ -103,7 +103,7 @@ class UNHCRSituations:
             "description": "Country level refugees and asylum seekers over time",
         }
 
-        dataset.generate_resource_from_rows(
+        dataset.generate_resource(
             self.folder,
             filename,
             rows,
