@@ -47,4 +47,4 @@ jobs:
           context: .
           push: true
 
-          tags: public.ecr.aws/unocha/hdx-scraper-unhcr_situations:${{ steps.tag_info.outputs.IMAGE_TAG }}
+          tags: public.ecr.aws/unocha/hdx-scraper-unhcr-situations:${{ steps.tag_info.outputs.IMAGE_TAG }}
