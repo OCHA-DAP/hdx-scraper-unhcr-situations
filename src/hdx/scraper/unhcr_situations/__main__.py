@@ -6,75 +6,81 @@ script then creates in HDX.
 """
 
 import logging
-from os.path import dirname, expanduser, join
+from os.path import expanduser, join
 
 from hdx.api.configuration import Configuration
-from hdx.data.hdxobject import HDXError
 from hdx.data.user import User
 from hdx.facades.infer_arguments import facade
 from hdx.utilities.downloader import Download
-from hdx.utilities.errors_onexit import ErrorHandler
-from hdx.utilities.path import temp_dir
+from hdx.utilities.path import (
+    script_dir_plus_file,
+    wheretostart_tempdir_batch,
+)
 from hdx.utilities.retriever import Retrieve
 
-from hdx.scraper.unhcr_situations.unhcr_situations import UNHCRSituations
+from hdx.scraper.unhcr_situations._version import __version__
+from hdx.scraper.unhcr_situations.pipeline import Pipeline
 
 logger = logging.getLogger(__name__)
 
-_USER_AGENT_LOOKUP = "hdx-scraper-unhcr-situations"
+_LOOKUP = "hdx-scraper-unhcr-situations"
 _SAVED_DATA_DIR = "saved_data"  # Keep in repo to avoid deletion in /tmp
 _UPDATED_BY_SCRIPT = "HDX Scraper: UNHCR Situations"
 
 
-def main(save: bool = False, use_saved: bool = False) -> None:
+def main(
+    save: bool = False,
+    use_saved: bool = False,
+) -> None:
     """Generate datasets and create them in HDX
 
     Args:
-        save (bool): Save downloaded data. Defaults to False.
-        use_saved (bool): Use saved data. Defaults to False.
+        save: Save downloaded data. Defaults to False.
+        use_saved: Use saved data. Defaults to False.
 
     Returns:
         None
     """
+    logger.info(f"##### {_LOOKUP} version {__version__} ####")
     configuration = Configuration.read()
     User.check_current_user_write_access("unhcr")
-    with ErrorHandler() as errors:
-        with temp_dir(_USER_AGENT_LOOKUP) as temp_folder:
-            with Download() as downloader:
-                retriever = Retrieve(
-                    downloader, temp_folder, "saved_data", temp_folder, save, use_saved
-                )
-                unhcr_situations = UNHCRSituations(
-                    configuration, retriever, temp_folder, errors
-                )
-                unhcr_situations.get_data_from_hdx(configuration["dataset_name"])
-                unhcr_situations.get_data_from_unhcr()
-                dataset = unhcr_situations.generate_dataset()
-                if dataset:
-                    dataset.update_from_yaml(
-                        path=join(
-                            dirname(__file__), "config", "hdx_dataset_static.yaml"
-                        )
+
+    with wheretostart_tempdir_batch(folder=_LOOKUP) as info:
+        tempdir = info["folder"]
+        with Download() as downloader:
+            retriever = Retrieve(
+                downloader=downloader,
+                fallback_dir=tempdir,
+                saved_dir=_SAVED_DATA_DIR,
+                temp_dir=tempdir,
+                save=save,
+                use_saved=use_saved,
+            )
+            pipeline = Pipeline(configuration, retriever, tempdir)
+            pipeline.get_data_from_hdx(configuration["dataset_name"])
+            pipeline.get_data_from_unhcr()
+
+            dataset = pipeline.generate_dataset()
+            if dataset:
+                dataset.update_from_yaml(
+                    script_dir_plus_file(
+                        join("config", "hdx_dataset_static.yaml"), main
                     )
-                    dataset["notes"] = dataset["notes"].replace(
-                        "\n", "  \n"
-                    )  # ensure markdown has line breaks
-                    try:
-                        dataset.create_in_hdx(
-                            remove_additional_resources=True,
-                            match_resource_order=False,
-                            updated_by_script=_UPDATED_BY_SCRIPT,
-                        )
-                    except HDXError:
-                        errors.add("Could not upload dataset to HDX")
+                )
+                dataset.create_in_hdx(
+                    remove_additional_resources=True,
+                    match_resource_order=False,
+                    updated_by_script=_UPDATED_BY_SCRIPT,
+                    batch=info["batch"],
+                )
 
 
 if __name__ == "__main__":
     facade(
         main,
         user_agent_config_yaml=join(expanduser("~"), ".useragents.yaml"),
-        user_agent_lookup=_USER_AGENT_LOOKUP,
-        project_config_yaml=join(
-            dirname(__file__), "config", "project_configuration.yaml"
+        user_agent_lookup=_LOOKUP,
+        project_config_yaml=script_dir_plus_file(
+            join("config", "project_configuration.yaml"), main
         ),
     )
