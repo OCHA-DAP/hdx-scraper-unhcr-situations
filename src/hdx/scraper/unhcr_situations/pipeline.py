@@ -1,10 +1,5 @@
-"""
-UNHCR Situations:
-------------
-
-Reads UNHCR JSONs and creates datasets.
-
-"""
+#!/usr/bin/python
+"""UNHCR Situations scraper"""
 
 import logging
 
@@ -17,14 +12,13 @@ from slugify import slugify
 logger = logging.getLogger(__name__)
 
 
-class UNHCRSituations:
-    def __init__(self, configuration, retriever, folder, errors):
+class Pipeline:
+    def __init__(self, configuration, retriever, folder):
         self.configuration = configuration
         self.retriever = retriever
         self.folder = folder
         self.old_data = []
         self.new_data = []
-        self.errors = errors
 
     def get_data_from_hdx(self, dataset_name):
         dataset = Dataset.read_from_hdx(dataset_name)
@@ -47,7 +41,7 @@ class UNHCRSituations:
             try:
                 json = self.retriever.download_json(url)
             except DownloadError:
-                self.errors.add(f"Could not download data for {geo_id}")
+                logger.error(f"Could not download data for {geo_id}")
                 continue
 
             for data_row in json["data"]:

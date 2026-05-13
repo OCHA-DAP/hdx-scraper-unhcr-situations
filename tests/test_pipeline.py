@@ -1,21 +1,14 @@
-#!/usr/bin/python
-"""
-Unit tests for unhcr situations.
-
-"""
-
 from os.path import join
 
 from hdx.utilities.compare import assert_files_same
 from hdx.utilities.downloader import Download
-from hdx.utilities.errors_onexit import ErrorHandler
 from hdx.utilities.path import temp_dir
 from hdx.utilities.retriever import Retrieve
 
-from hdx.scraper.unhcr_situations.unhcr_situations import UNHCRSituations
+from hdx.scraper.unhcr_situations.pipeline import Pipeline
 
 
-class TestUNHCRSituations:
+class TestPipeline:
     dataset = {
         "name": "unhcr-situations",
         "title": "UNHCR Situations: Monthly Refugees and Asylum Seekers",
@@ -66,8 +59,12 @@ class TestUNHCRSituations:
         input_dir,
         config_dir,
     ):
-        with temp_dir("test_unhcr_situations") as tempdir:
-            with Download() as downloader:
+        with temp_dir(
+            "TestUNHCR_situations",
+            delete_on_success=True,
+            delete_on_failure=False,
+        ) as tempdir:
+            with Download(user_agent="test") as downloader:
                 retriever = Retrieve(
                     downloader=downloader,
                     fallback_dir=tempdir,
@@ -76,12 +73,10 @@ class TestUNHCRSituations:
                     save=False,
                     use_saved=True,
                 )
-                unhcr_situations = UNHCRSituations(
-                    configuration, retriever, tempdir, ErrorHandler()
-                )
-                unhcr_situations.get_data_from_hdx(configuration["dataset_name"])
-                assert len(unhcr_situations.old_data) == 4
-                assert unhcr_situations.old_data[0] == {
+                pipeline = Pipeline(configuration, retriever, tempdir)
+                pipeline.get_data_from_hdx(configuration["dataset_name"])
+                assert len(pipeline.old_data) == 4
+                assert pipeline.old_data[0] == {
                     "Country": "Benin",
                     "ISO3": "BEN",
                     "Country of Origin": "Togo",
@@ -91,9 +86,9 @@ class TestUNHCRSituations:
                     "Date": "2024-05-31",
                     "Individuals": "4716",
                 }
-                unhcr_situations.get_data_from_unhcr(geo_ids=["220", "259", "295"])
-                assert len(unhcr_situations.new_data) == 21
-                assert unhcr_situations.new_data[0] == {
+                pipeline.get_data_from_unhcr(geo_ids=["220", "259", "295"])
+                assert len(pipeline.new_data) == 21
+                assert pipeline.new_data[0] == {
                     "Country": "Uganda",
                     "ISO3": "UGA",
                     "Country of Origin": "South Sudan",
@@ -103,7 +98,7 @@ class TestUNHCRSituations:
                     "Date": "2024-06-30",
                     "Individuals": "948191",
                 }
-                dataset = unhcr_situations.generate_dataset()
+                dataset = pipeline.generate_dataset()
                 dataset.update_from_yaml(
                     path=join(config_dir, "hdx_dataset_static.yaml")
                 )
